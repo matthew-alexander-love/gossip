@@ -1,6 +1,6 @@
 # Gossip Peer Sampling Service (GPSS)
 
-A Gossip Peer Sampling Service (GPSS) creates a dynamic, random overlay network and provides peers for communication within that topology. This library is designed to be a general-purpose implementation of GPSS, making it useful for a variety of large-scale distributed systems.
+A Gossip Peer Sampling Service (GPSS) creates a dynamic, random, self-healing overlay network and provides peers for communication within that topology. This library is designed to be a general-purpose implementation of GPSS, making it useful for a variety of large-scale distributed systems.
 
 Check out a walk through and tutorial here: **Coming Soon**
 
