@@ -1,0 +1,5 @@
+include src/*.cc
+include include/*.h
+include build/*.cc
+include build/*.h
+include CMakeLists.txt

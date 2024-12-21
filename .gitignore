@@ -14,7 +14,7 @@ gossip.egg-info/
 gossip/__pycache__/
 gossip/*.so
 gossip/sim_logs/
-myenv/
+pyenv/
 sim_logs/
 examples/sim_logs/
 lib/

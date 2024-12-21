@@ -1,0 +1,24 @@
+[build-system]
+requires = ["scikit-build-core", "pybind11"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "example"
+version = "0.1.0"
+requires-python = ">= 3.9"
+authors = [
+    {name = "Matthew Love", email = "gossipsampling@gmail.com"}
+]
+maintainers = [
+    {name = "Matthew Love", email = "gossipsampling@gmail.com"}
+]
+description = "Gossip Peer Sampling Service that maintains a gossip overlay network"
+license = {file = "LICENSE.txt"}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Networking",
+    "License :: GPLv3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+]

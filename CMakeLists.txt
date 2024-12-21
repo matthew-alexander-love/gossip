@@ -20,7 +20,7 @@ cmake_minimum_required(VERSION 3.14)
 project(gossip CXX)
 
 option(PYTHON_FE_ENABLED "Build a python front end package" ON)
-option(TESTS_ENABLED "Build subsystem tests" ON)
+option(TESTS_ENABLED "Build subsystem tests" OFF)
 option(INSTALL_LOCALLY "Clone and build all dependencies in project dir" ON)
 option(BUILD_EXAMPLES "Build the example executables" ON)
 option(BUILD_SHARED_LIBS "Build libraries as shared libraries" OFF)

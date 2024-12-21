@@ -148,7 +148,17 @@ kwargs = dict(
     ext_modules=[CMakeExtension("gossip._gossip")],
     cmdclass={"build_ext": CMakeBuild},
     zip_safe=False,
-    packages=['gossip']
+    packages=['gossip'],
+    license="GPLv3",
+
+    classifiers=[
+        'Development Status :: 1 - Alpha',
+        'Intended Audience :: Science/Research/Networking',
+        'License :: GPLv3',  
+        'Operating System :: POSIX :: Linux',
+        'Programming Language :: C++ :: 20'    
+        'Programming Language :: Python :: 3.10',
+    ],
 )
 
 setup(**kwargs)
