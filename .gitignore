@@ -1,0 +1,20 @@
+.local/
+.vscode/
+grpc/
+googletest/
+pybind11/
+# Build System Generated Files
+build/
+cbuild/
+CMakeFiles/
+cmake_install.cmake
+CMakeCache.txt
+Makefile
+gossip.egg-info/
+gossip/__pycache__/
+gossip/*.so
+gossip/sim_logs/
+myenv/
+sim_logs/
+examples/sim_logs/
+lib/
