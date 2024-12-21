@@ -9,9 +9,9 @@ Check out a walk through and tutorial here: **Coming Soon**
 - General-Purpose Library: Build on a flexible GPSS implementation inspired by Epidemic-style Dissemination in Large-Scale Systems.
 - Extensibility: Supports the integration of custom algorithms for experimentation and deployment.
 - Multi-Language Support: C++ Core Library, Python Simulation Software, and HighLevel API in both languages
-- gRPC Integration: Leverage gRPC for efficient communication in large-scale distributed systems. ()
-- Open Source: This project is license under the terms of the GPLv3 license. Contributions are welcome to improve functionality or add new features. Check out the Future Features section to see how you could help.
+- gRPC Integration: Leverage gRPC for efficient communication in large-scale distributed systems.
 - Multiple Peer Selection Subscription that are independent from one another.
+- Open Source: This project is licensed under the terms of the GPLv3 license. Contributions are welcome to improve functionality or add new features. Check out the Future Features section to see how you could help.
 
 #### Future Features:
 This project is proudly open source and will remain so, as I believe in the power of collaboration and accessibility for all.
@@ -55,13 +55,25 @@ Once the project has been built, there are examples for both Python and C++ loca
 - **Usage**:
   - **C++**:
     ```bash
+    # IPv4
     cd cbuild
     ./gossip_entry_server_example 0.0.0.0:50000
     ```
+    ```bash
+    # IPv6
+    cd cbuild
+    ./gossip_entry_server_example [::]:50000
+    ```
   - **Python**:
     ```bash
+    # IPv4
     cd example
     python gossip_entry_server_example.py 0.0.0.0:50000
+    ```
+    ```bash
+    # IPv6
+    cd example
+    python gossip_entry_server_example.py [::]:50000
     ```
 
 ### `gossip_client_example.*`
@@ -71,13 +83,25 @@ Once the project has been built, there are examples for both Python and C++ loca
 - **Usage**:
   - **C++**:
     ```bash
-    cd build
+    # IPv4
+    cd cbuild
     ./gossip_client_example 0.0.0.0:60000 0.0.0.0:50000
+    ```
+    ```bash
+    # IPv6
+    cd cbuild
+    ./gossip_client_example [::]:60000 [::]:50000
     ```
   - **Python**:
     ```bash
+    # IPv4
     cd example
     python gossip_client_example.py 0.0.0.0:60000 0.0.0.0:50000
+    ```
+    ```bash
+    # IPv6
+    cd example
+    python gossip_client_example.py [::]:60000 [::]:500000
     ```
 
 ### Emulating a Network over LAN
