@@ -140,7 +140,7 @@ class CMakeBuild(build_ext):
 
 kwargs = dict(
     name="gossipsampling",
-    version="0.1.1",
+    version="0.1.2",
     author="Matthew Love",
     author_email="gossipsampling@gmail.com",
     description="C++ Gossip Peer Sampling Service with Python Front End",

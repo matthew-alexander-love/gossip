@@ -45,8 +45,11 @@ If you have a big idea email me at gossipsampling@gmail.com for some conversatio
 
 
 #### Building for Python
-- pip install pybind11 setuptools
-- pip install .
+- For Ubuntu you can use a remote installation:
+    - pip install gossipsampling
+- For ALL others you will need to build locally: 
+    - pip install pybind11 setuptools
+    - pip install .
 
 ## Examples
 
