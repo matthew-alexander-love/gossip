@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.10)
 
 # To be removed later when including in others
 project(gossip CXX)
@@ -36,12 +36,14 @@ set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};${CMAKE_SOURCE_DIR}/.local")
 if(INSTALL_LOCALLY)
     if (TESTS_ENABLED)
         execute_process(
-            COMMAND sudo /bin/bash ${CMAKE_SOURCE_DIR}/install_dep_local.sh test
+            #COMMAND sudo /bin/bash ${CMAKE_SOURCE_DIR}/install_dep_local.sh test
+            COMMAND /bin/bash ${CMAKE_SOURCE_DIR}/install_dep_local.sh test
             WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         )
     else()
         execute_process(
-            COMMAND sudo /bin/bash ${CMAKE_SOURCE_DIR}/install_dep_local.sh prod
+            #COMMAND sudo /bin/bash ${CMAKE_SOURCE_DIR}/install_dep_local.sh prod
+            COMMAND /bin/bash ${CMAKE_SOURCE_DIR}/install_dep_local.sh prod
             WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         )
     endif()

@@ -4,6 +4,8 @@ A Gossip Peer Sampling Service (GPSS) creates a dynamic, random, self-healing ov
 
 Check out a walk through and tutorial here: **Coming Soon**
 
+Check out the source code at the [Gossip Sampling Repository]("https://github.com/matthew-alexander-love/gossip")
+
 ## Features
 
 - General-Purpose Library: Build on a flexible GPSS implementation inspired by Epidemic-style Dissemination in Large-Scale Systems.
