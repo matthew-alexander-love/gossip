@@ -29,6 +29,17 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    # Debug information
+    - name: Show workspace contents and CMake version
+      run: |
+        pwd
+        ls -la
+        cmake --version
+        echo "Python location:"
+        which python3
+        echo "Working directory contents:"
+        ls -R
+
     # Install basic requirements based on distribution
     - name: Install base requirements (Debian/Ubuntu)
       if: contains(matrix.distro, 'ubuntu') || contains(matrix.distro, 'debian')
@@ -112,9 +123,27 @@ jobs:
         python3 -m pip install --upgrade pip
         python3 -m pip install setuptools wheel build pytest grpcio grpcio-tools
 
-    - name: Build and install package
+    # Create build directory and run CMake first
+    - name: Configure CMake
       run: |
+        mkdir -p build
+        cd build
+        cmake .. -DPYTHON_FE_ENABLED=ON -DCMAKE_BUILD_TYPE=Release
+
+    # Build the package using setup.py
+    - name: Build and install package
+      env:
+        CMAKE_BUILD_PARALLEL_LEVEL: 4
+      run: |
+        export CMAKE_PREFIX_PATH=$PWD/build:$CMAKE_PREFIX_PATH
         python3 setup.py bdist_wheel
+
+    - name: Show build artifacts
+      run: |
+        echo "Build directory contents:"
+        ls -R build/
+        echo "Dist directory contents:"
+        ls -R dist/
 
     - name: Upload wheels as artifacts
       uses: actions/upload-artifact@v3
