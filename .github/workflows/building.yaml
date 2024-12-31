@@ -1,0 +1,123 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        distro: 
+          - ubuntu:20.04
+          - ubuntu:22.04
+          - debian:buster
+          - debian:bullseye
+          - centos:7
+          - rockylinux:8
+          - fedora:35
+          - fedora:36
+        python-version: ['3.8', '3.9', '3.10', '3.11']
+
+    container:
+      image: ${{ matrix.distro }}
+
+    steps:
+    - uses: actions/checkout@v3
+
+    # Install basic requirements based on distribution
+    - name: Install base requirements (Debian/Ubuntu)
+      if: contains(matrix.distro, 'ubuntu') || contains(matrix.distro, 'debian')
+      run: |
+        apt-get update
+        DEBIAN_FRONTEND=noninteractive apt-get install -y \
+          python3-pip \
+          python3-dev \
+          build-essential \
+          cmake \
+          git \
+          curl \
+          pybind11-dev \
+          protobuf-compiler \
+          protobuf-compiler-grpc \
+          libgrpc++-dev \
+          libprotobuf-dev \
+          libprotoc-dev
+
+    - name: Install base requirements (CentOS)
+      if: contains(matrix.distro, 'centos')
+      run: |
+        yum install -y epel-release
+        yum install -y \
+          python3-devel \
+          gcc \
+          gcc-c++ \
+          make \
+          cmake \
+          git \
+          curl \
+          protobuf \
+          protobuf-devel \
+          protobuf-compiler \
+          grpc \
+          grpc-devel \
+          grpc-plugins
+        python3 -m pip install pybind11
+
+    - name: Install base requirements (Rocky Linux)
+      if: contains(matrix.distro, 'rockylinux')
+      run: |
+        dnf install -y epel-release
+        dnf install -y \
+          python3-devel \
+          gcc \
+          gcc-c++ \
+          make \
+          cmake \
+          git \
+          curl \
+          protobuf \
+          protobuf-devel \
+          protobuf-compiler \
+          grpc \
+          grpc-devel \
+          grpc-plugins
+        python3 -m pip install pybind11
+
+    - name: Install base requirements (Fedora)
+      if: contains(matrix.distro, 'fedora')
+      run: |
+        dnf install -y \
+          python3-devel \
+          gcc \
+          gcc-c++ \
+          make \
+          cmake \
+          git \
+          curl \
+          pybind11-devel \
+          protobuf \
+          protobuf-devel \
+          protobuf-compiler \
+          grpc \
+          grpc-devel \
+          grpc-plugins
+
+    - name: Set up Python
+      run: |
+        python3 -m pip install --upgrade pip
+        python3 -m pip install setuptools wheel build pytest grpcio grpcio-tools
+
+    - name: Build and install package
+      run: |
+        python3 setup.py bdist_wheel
+
+    - name: Upload wheels as artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: wheels-${{ matrix.distro }}-py${{ matrix.python-version }}
+        path: dist/*.whl
