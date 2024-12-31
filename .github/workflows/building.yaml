@@ -34,25 +34,28 @@ jobs:
       if: contains(matrix.distro, 'ubuntu') || contains(matrix.distro, 'debian')
       run: |
         apt-get update
-        DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        DEBIAN_FRONTEND=noninteractive apt-get install -y sudo
+        sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
           python3-pip \
           python3-dev \
           build-essential \
           cmake \
           git \
           curl \
-          pybind11-dev \
           protobuf-compiler \
           protobuf-compiler-grpc \
           libgrpc++-dev \
           libprotobuf-dev \
-          libprotoc-dev
+          libprotoc-dev \
+          ninja-build \
+          pybind11-dev
 
     - name: Install base requirements (CentOS)
       if: contains(matrix.distro, 'centos')
       run: |
-        yum install -y epel-release
-        yum install -y \
+        yum install -y sudo
+        sudo yum install -y epel-release
+        sudo yum install -y \
           python3-devel \
           gcc \
           gcc-c++ \
@@ -65,13 +68,16 @@ jobs:
           protobuf-compiler \
           grpc \
           grpc-devel \
-          grpc-plugins
+          grpc-plugins \
+          ninja-build
+        sudo yum install -y pybind11-devel || sudo python3 -m pip install pybind11
 
     - name: Install base requirements (Rocky Linux)
       if: contains(matrix.distro, 'rockylinux')
       run: |
-        dnf install -y epel-release
-        dnf install -y \
+        dnf install -y sudo
+        sudo dnf install -y epel-release
+        sudo dnf install -y \
           python3-devel \
           gcc \
           gcc-c++ \
@@ -84,12 +90,15 @@ jobs:
           protobuf-compiler \
           grpc \
           grpc-devel \
-          grpc-plugins
+          grpc-plugins \
+          ninja-build
+        sudo dnf install -y pybind11-devel || sudo python3 -m pip install pybind11
 
     - name: Install base requirements (Fedora)
       if: contains(matrix.distro, 'fedora')
       run: |
-        dnf install -y \
+        dnf install -y sudo
+        sudo dnf install -y \
           python3-devel \
           gcc \
           gcc-c++ \
@@ -103,30 +112,28 @@ jobs:
           protobuf-compiler \
           grpc \
           grpc-devel \
-          grpc-plugins
+          grpc-plugins \
+          ninja-build
 
     - name: Set up Python
       run: |
-        python3 -m pip install --upgrade pip
-        python3 -m pip install setuptools wheel build pytest grpcio grpcio-tools ninja pybind11
+        sudo python3 -m pip install --upgrade pip
+        sudo python3 -m pip install setuptools wheel build pytest grpcio grpcio-tools
 
-    # Debug information
-    - name: Show workspace contents and CMake version
-      run: |
-        pwd
-        ls -la
-        cmake --version
-        echo "Python location:"
-        which python3
-        echo "Working directory contents:"
-        ls -R
-
-    # Build the package using setup.py
+    # Build the package using setup.py with specific environment variables
     - name: Build and install package
       env:
-        CMAKE_BUILD_PARALLEL_LEVEL: 4
+        CMAKE_PREFIX_PATH: ${{ github.workspace }}
+        PYTHON_FE_ENABLED: ON
+        CMAKE_BUILD_TYPE: Release
+        CMAKE_GENERATOR: Ninja
+        SETUPTOOLS_CMAKE_SOURCE_DIR: ${{ github.workspace }}
+        CMAKE_LIBRARY_OUTPUT_DIRECTORY: ${{ github.workspace }}/build/lib
       run: |
-        python3 setup.py bdist_wheel
+        # Create initial build directory
+        sudo mkdir -p build
+        # Run setup.py
+        sudo python3 setup.py bdist_wheel
 
     - name: Show build artifacts
       run: |
