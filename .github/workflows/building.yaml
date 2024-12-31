@@ -29,17 +29,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    # Debug information
-    - name: Show workspace contents and CMake version
-      run: |
-        pwd
-        ls -la
-        cmake --version
-        echo "Python location:"
-        which python3
-        echo "Working directory contents:"
-        ls -R
-
     # Install basic requirements based on distribution
     - name: Install base requirements (Debian/Ubuntu)
       if: contains(matrix.distro, 'ubuntu') || contains(matrix.distro, 'debian')
@@ -123,12 +112,16 @@ jobs:
         python3 -m pip install --upgrade pip
         python3 -m pip install setuptools wheel build pytest grpcio grpcio-tools
 
-    # Create build directory and run CMake first
-    - name: Configure CMake
+    # Debug information
+    - name: Show workspace contents and CMake version
       run: |
-        mkdir -p build
-        cd build
-        cmake .. -DPYTHON_FE_ENABLED=ON -DCMAKE_BUILD_TYPE=Release
+        pwd
+        ls -la
+        cmake --version
+        echo "Python location:"
+        which python3
+        echo "Working directory contents:"
+        ls -R
 
     # Build the package using setup.py
     - name: Build and install package
