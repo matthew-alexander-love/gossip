@@ -66,7 +66,6 @@ jobs:
           grpc \
           grpc-devel \
           grpc-plugins
-        python3 -m pip install pybind11
 
     - name: Install base requirements (Rocky Linux)
       if: contains(matrix.distro, 'rockylinux')
@@ -86,7 +85,6 @@ jobs:
           grpc \
           grpc-devel \
           grpc-plugins
-        python3 -m pip install pybind11
 
     - name: Install base requirements (Fedora)
       if: contains(matrix.distro, 'fedora')
@@ -110,7 +108,7 @@ jobs:
     - name: Set up Python
       run: |
         python3 -m pip install --upgrade pip
-        python3 -m pip install setuptools wheel build pytest grpcio grpcio-tools
+        python3 -m pip install setuptools wheel build pytest grpcio grpcio-tools ninja pybind11
 
     # Debug information
     - name: Show workspace contents and CMake version
@@ -128,7 +126,6 @@ jobs:
       env:
         CMAKE_BUILD_PARALLEL_LEVEL: 4
       run: |
-        export CMAKE_PREFIX_PATH=$PWD/build:$CMAKE_PREFIX_PATH
         python3 setup.py bdist_wheel
 
     - name: Show build artifacts
